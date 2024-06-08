@@ -56,11 +56,16 @@ export default defineConfig({
         injectCss: true,
       }
     }),
-    stripDevIcons(isDev)
+    stripDevIcons(isDev),
   ],
   publicDir,
   build: {
     outDir,
+    rollupOptions: {
+      input: {
+        setup: './src/pages/setup/index.html',
+      },
+    },
     sourcemap: isDev,
     emptyOutDir: !isDev
   },
