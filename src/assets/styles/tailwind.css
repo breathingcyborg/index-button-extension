@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
+    .google-indexing-extension {
         --background: 0 0% 100%;
         --foreground: 240 10% 3.9%;
         --card: 0 0% 100%;
@@ -25,8 +25,8 @@
         --ring: 142.1 76.2% 36.3%;
         --radius: 1rem;
     }
-
-    .dark {
+    
+    .google-indexing-extension.dark {
         --background: 20 14.3% 4.1%;
         --foreground: 0 0% 95%;
         --card: 24 9.8% 10%;
@@ -47,15 +47,16 @@
         --input: 240 3.7% 15.9%;
         --ring: 142.4 71.8% 29.2%;
     }
+   
 }
 
 
 @layer base {
-    * {
+    .google-indexing-extension > * {
         @apply border-border;
     }
 
-    body {
+    .google-indexing-extension {
         @apply bg-background text-foreground;
     }
 }

@@ -5,7 +5,7 @@
  * Could have more properties.
  * 
  */
-export type ServiceAccounCreds = {
+export type ServiceAccountCreds = {
     project_id: string,
     private_key_id: string,
     private_key: string,

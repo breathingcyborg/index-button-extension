@@ -1,14 +1,13 @@
 import { Input } from "@src/components/ui/input";
 import { Label } from "@src/components/ui/label";
-import { ServiceAccountCredsStorage } from "@src/lib/service-account/creds-store";
-import { validateServiceAccountJson } from "@src/lib/service-account/validate-json";
-import { Loader2Icon, YoutubeIcon } from "lucide-react";
-import React, { ChangeEventHandler, useState } from "react";
-
+import { Loader2Icon } from "lucide-react";
+import { ChangeEventHandler, useState } from "react";
+import { useKeys } from "./keys-context";
 
 export function AddKey({ onSuccess }: { onSuccess: () => void }) {
     const [processing, setProcessing] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const { add } = useKeys();
   
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
       event.preventDefault();
@@ -43,31 +42,15 @@ export function AddKey({ onSuccess }: { onSuccess: () => void }) {
           setProcessing(false);
         }
   
-        // Validate JSON Schema
-        try {
-  
-          validateServiceAccountJson(json);
-  
-        } catch (e) {
-  
-          setErrorMessage((e as Error).message);
+        
+        const result = await add(json)
+        if (!result.success) {
           setProcessing(false);
-  
+          setErrorMessage(result.message);
+          return
         }
-  
-        // Store
-        try {
-  
-          const store = new ServiceAccountCredsStorage();
-          await store.insert(json);
-  
-        } catch (e) {
-  
-          setErrorMessage((e as Error).message);
-          setProcessing(false);
-  
-        }
-  
+
+        setProcessing(false);
         onSuccess();
       }
   

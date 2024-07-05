@@ -1,7 +1,9 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Setup } from './setup';
-import '@pages/setup/index.css';
+import '@pages/settings/index.css';
 import '@assets/styles/tailwind.css';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 import { Screen } from '@src/components/ui/screen';
 import { KeysContextProvider } from '@src/components/keys/keys-context';
 
@@ -12,7 +14,7 @@ function init() {
   root.render(
     <Screen>
       <KeysContextProvider>
-        <Setup />
+        <RouterProvider router={router} />
       </KeysContextProvider>
     </Screen>
   );

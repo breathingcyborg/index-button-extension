@@ -3,12 +3,16 @@ import { cn } from "@src/lib/utils/cn";
 import { YoutubeIcon } from "lucide-react";
 import codeIcon from '@assets/img/icons/undraw_code_typing_re_p8b9.svg';
 
-export function Intro() {
+export function AddKeyIntro({ firstTime = true } : { firstTime?: boolean }) {
     return <div>
-        <h1 className="text-center text-3xl">
-            Get your pages indexed <br />
-            With google in 24 hours
-        </h1>
+        {
+            firstTime && (
+                <h1 className="text-center text-3xl">
+                    Get your pages indexed <br />
+                    With google in 24 hours
+                </h1>
+            )
+        }
         <div className="mt-4 text-center">
             <img src={codeIcon} />
         </div>

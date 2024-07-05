@@ -64,6 +64,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         setup: './src/pages/setup/index.html',
+        settings: './src/pages/settings/index.html'
       },
     },
     sourcemap: isDev,

@@ -1,10 +1,10 @@
-import { ServiceAccounCreds } from "./types";
+import { ServiceAccountCreds } from "./types";
 
 const STORAGE_KEY = 'service_account_creds'
 
 export class ServiceAccountCredsStorage {
 
-    async insert(creds: ServiceAccounCreds) {
+    async insert(creds: ServiceAccountCreds) {
         const credsList = await this.getAll();
         credsList.push(creds);
         await this.persist(credsList);
@@ -21,10 +21,10 @@ export class ServiceAccountCredsStorage {
 
     async getAll() {
         const result = await chrome.storage.local.get(STORAGE_KEY);
-        return (result[STORAGE_KEY] as ServiceAccounCreds[] || [])
+        return (result[STORAGE_KEY] as ServiceAccountCreds[] || [])
     }
 
-    private async persist(creds: ServiceAccounCreds[]) {
+    private async persist(creds: ServiceAccountCreds[]) {
         await chrome.storage.local.set({ [STORAGE_KEY]: creds });
     }
 }
