@@ -2,6 +2,8 @@ import { createRoot } from 'react-dom/client';
 import './style.css' 
 import { Buttons } from './buttons';
 import { KeysContextProvider } from '@src/components/keys/keys-context';
+import { Toaster } from "@src/components/ui/sonner";
+
 
 const div = document.createElement('div');
 div.id = '__root';
@@ -14,6 +16,7 @@ const root = createRoot(rootContainer);
 root.render(
   <KeysContextProvider>
     <Buttons />
+    <Toaster />
   </KeysContextProvider>
 );
 

@@ -1,11 +1,22 @@
 import type { CreateTabRequest, IndexPageRequest, StatusResponse } from "@src/background-message-handlers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ButtonsContainer } from "./buttons-container";
 import { Button } from "@src/components/ui/button";
-import { CloudUploadIcon, Layers3Icon, LoaderIcon, SettingsIcon } from "lucide-react";
+import { CheckCircle2, CloudUploadIcon, Layers3Icon, LoaderIcon, SettingsIcon } from "lucide-react";
+import { toast } from "sonner"
 
 export function IndexingButtons() {
     const [submitting, setSubmitting] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    // hide success after x seconds
+    useEffect(() => {
+        if (success) {
+            setTimeout(() => {
+                setSuccess(false)   
+            }, 2000)
+        }
+    }, [success, setSuccess]);
 
     const navigateToBulkIndexPage = async () => {
         await chrome.runtime.sendMessage({
@@ -28,6 +39,10 @@ export function IndexingButtons() {
     }
 
     const indexSingle = async () => {
+        // wait for success animation to finish
+        if (success) {
+            return;
+        }
         const url = window.location.href;
         setSubmitting(true);
         const response : StatusResponse = await chrome.runtime.sendMessage({
@@ -38,17 +53,33 @@ export function IndexingButtons() {
         } satisfies IndexPageRequest);
         setSubmitting(false);
         if (!response.success) {
-            // TODO: display error some how
-            console.log(response.message);
+            toast.error(response.message || 'Something went wrong', {
+                position: 'bottom-center',
+                dismissible: true,
+                closeButton: true,
+                classNames: {
+                    closeButton: 'group-[.toast]:bg-background group-[.toast]:hover:bg-background group-[.toast]:text-foreground'
+                }
+            });
+            return;
         }
+        setSuccess(true);
     }
 
     return <ButtonsContainer>
         <Button variant='ghost' onClick={indexSingle}>
             {
-                submitting ? (
+                submitting && (
                     <LoaderIcon className="animate-spin" />
-                ) : (
+                )
+            }
+            {
+                !submitting && success && (
+                    <CheckCircle2 color="green" />
+                )
+            }
+            {
+                !submitting && !success && (
                     <CloudUploadIcon />
                 )
             }
