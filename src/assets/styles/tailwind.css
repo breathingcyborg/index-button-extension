@@ -25,6 +25,16 @@
         --ring: 142.1 76.2% 36.3%;
         --radius: 1rem;
     }
+
+    .google-indexing-extension .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    }
+    
+    .google-indexing-extension .invisible-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+    }
     
     .google-indexing-extension.dark {
         --background: 20 14.3% 4.1%;

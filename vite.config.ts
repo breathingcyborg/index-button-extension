@@ -64,7 +64,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         setup: './src/pages/setup/index.html',
-        settings: './src/pages/settings/index.html'
+        settings: './src/pages/settings/index.html',
+        bulkIndex: './src/pages/bulk/index.html'
       },
     },
     sourcemap: isDev,
