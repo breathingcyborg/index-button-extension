@@ -1,5 +1,7 @@
-import { Buttons } from "../content/buttons";
+import { Buttons } from "../../components/index-buttons/buttons";
 
 export function Popup() {
-    return <Buttons />
+    return <div className="p-4">
+        <Buttons inPopup />
+    </div>
 }

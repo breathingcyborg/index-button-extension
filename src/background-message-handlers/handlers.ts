@@ -1,3 +1,5 @@
+import { getButtonSettings } from './button-settings/get-button-settings';
+import { setButtonSettings } from './button-settings/set-button-settings';
 import { createTab } from './general';
 import { indexPage } from './indexing';
 import { addKey, getKeys, removeKey } from './keys';
@@ -9,4 +11,6 @@ export const handlers : Record<string, MessageHandler> = {
     getKeys,
     removeKey,
     addKey,
+    getButtonSettings,
+    setButtonSettings
 }

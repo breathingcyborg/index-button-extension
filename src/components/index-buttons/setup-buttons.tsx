@@ -1,5 +1,4 @@
 import { Button } from "@src/components/ui/button";
-import { ButtonsContainer } from "./buttons-container";
 import { SettingsIcon } from "lucide-react";
 import type { CreateTabRequest } from "@src/background-message-handlers";
 
@@ -14,10 +13,10 @@ export function SetupButtons() {
         } satisfies CreateTabRequest);
     }
 
-    return <ButtonsContainer>
+    return (
         <Button variant='ghost' className="py-4" onClick={navigateToSetupPage}>
             <SettingsIcon className="h-4 w-4 mr-2" /> 
             Add Keys
         </Button>
-    </ButtonsContainer>
+    )
 }

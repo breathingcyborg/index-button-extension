@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Success } from './components/success';
+import { SetupComplete } from './components/setup-complete';
 import { AddKey } from '../../components/keys/add-key';
 import { AddKeyIntro } from '../../components/keys/add-key-intro';
 import { useKeys } from '@src/components/keys/keys-context';
@@ -11,7 +11,7 @@ export function Setup() {
   const hasKeys = keys.length > 0;
 
   if (complete || hasKeys) {
-    return <Success />
+    return <SetupComplete />
   }
 
   return <div className='py-4 px-2'>

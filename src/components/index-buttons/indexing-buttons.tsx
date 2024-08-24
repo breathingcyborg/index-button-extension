@@ -1,9 +1,9 @@
 import type { CreateTabRequest, IndexPageRequest, StatusResponse } from "@src/background-message-handlers";
 import { useEffect, useState } from "react";
-import { ButtonsContainer } from "./buttons-container";
 import { Button } from "@src/components/ui/button";
 import { CheckCircle2, CloudUploadIcon, Layers3Icon, LoaderIcon, SettingsIcon } from "lucide-react";
-import { toast } from "sonner"
+import { getCurrentUrl } from "@src/lib/utils/get-current-url";
+import { showError } from "./utils";
 
 export function IndexingButtons() {
     const [submitting, setSubmitting] = useState(false);
@@ -39,34 +39,41 @@ export function IndexingButtons() {
     }
 
     const indexSingle = async () => {
+
         // wait for success animation to finish
         if (success) {
             return;
         }
-        const url = window.location.href;
+
+        // get current page url
+        let url : string | null = null;
+        try {
+            url = await getCurrentUrl();
+        } catch(e) {
+            showError(e);
+            return
+        }
+
+        // submit for indexing
         setSubmitting(true);
         const response : StatusResponse = await chrome.runtime.sendMessage({
             type: 'indexPage',
             payload: { 
-                url: url
+                url: url!
             }
         } satisfies IndexPageRequest);
         setSubmitting(false);
+
+        // show error
         if (!response.success) {
-            toast.error(response.message || 'Something went wrong', {
-                position: 'bottom-center',
-                dismissible: true,
-                closeButton: true,
-                classNames: {
-                    closeButton: 'group-[.toast]:bg-background group-[.toast]:hover:bg-background group-[.toast]:text-foreground'
-                }
-            });
+            showError(response?.message)
             return;
         }
+
         setSuccess(true);
     }
 
-    return <ButtonsContainer>
+    return <>
         <Button variant='ghost' onClick={indexSingle}>
             {
                 submitting && (
@@ -90,5 +97,5 @@ export function IndexingButtons() {
         <Button variant='ghost' onClick={navigateToSettingsPage}>
             <SettingsIcon />
         </Button>
-    </ButtonsContainer>
+    </>
 }
