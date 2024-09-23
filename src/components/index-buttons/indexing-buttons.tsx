@@ -1,7 +1,7 @@
 import type { CreateTabRequest, IndexPageRequest, StatusResponse } from "@src/background-message-handlers";
 import { useEffect, useState } from "react";
 import { Button } from "@src/components/ui/button";
-import { CheckCircle2, CloudUploadIcon, Layers3Icon, LoaderIcon, SettingsIcon } from "lucide-react";
+import { CheckCircle2, CloudUploadIcon, FilesIcon, Layers3Icon, LoaderIcon, SettingsIcon } from "lucide-react";
 import { getCurrentUrl } from "@src/lib/utils/get-current-url";
 import { showError } from "./utils";
 
@@ -73,8 +73,21 @@ export function IndexingButtons() {
         setSuccess(true);
     }
 
-    return <>
-        <Button variant='ghost' onClick={indexSingle}>
+    return <>        
+        <Button 
+            className="rounded-l-full rounded-r-none bg-background translate-x-2 relative z-0" 
+            variant='ghost'
+            size='defaultNoBorder'
+            onClick={navigateToBulkIndexPage}
+            title="Bulk Index"
+        >
+            <FilesIcon />
+        </Button>
+        <Button
+            className="rounded-full h-auto px-4 py-4 text-lg relative z-10 hover:bg-primary-light"
+            variant='default'
+            title="Index This Page"
+            onClick={indexSingle}>
             {
                 submitting && (
                     <LoaderIcon className="animate-spin" />
@@ -82,7 +95,7 @@ export function IndexingButtons() {
             }
             {
                 !submitting && success && (
-                    <CheckCircle2 color="green" />
+                    <CheckCircle2 />
                 )
             }
             {
@@ -91,10 +104,13 @@ export function IndexingButtons() {
                 )
             }
         </Button>
-        <Button variant='ghost' onClick={navigateToBulkIndexPage}>
-            <Layers3Icon />
-        </Button>
-        <Button variant='ghost' onClick={navigateToSettingsPage}>
+        <Button 
+            className="rounded-r-full rounded-l-none bg-background -translate-x-2 relative z-0"  
+            variant='ghost' 
+            size='defaultNoBorder'
+            title="Settings"
+            onClick={navigateToSettingsPage}
+        >
             <SettingsIcon />
         </Button>
     </>

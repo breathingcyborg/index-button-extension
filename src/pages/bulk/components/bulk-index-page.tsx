@@ -1,5 +1,5 @@
 import { ScreenTitle } from "@src/components/ui/screen";
-import { Layers3Icon } from "lucide-react";
+import { FilesIcon } from "lucide-react";
 import { BulkIndexStep, UrlStatus, useBulkIndexContext } from "../context/bulk-index-context";
 import { InputUrls } from "./input-urls";
 import { Indexing } from "./indexing";
@@ -37,7 +37,7 @@ function PageHeader() {
 
     return <ScreenTitle className="flex justify-between">
         <div className="flex">
-            <Layers3Icon className="mr-3" />
+            <FilesIcon className="mr-3" />
             <div>
                 Bulk Index Pages
             </div>

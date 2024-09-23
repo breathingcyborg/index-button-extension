@@ -14,7 +14,7 @@ export function SetupButtons() {
     }
 
     return (
-        <Button variant='ghost' className="py-4" onClick={navigateToSetupPage}>
+        <Button variant='ghost' className="py-4 bg-background" onClick={navigateToSetupPage}>
             <SettingsIcon className="h-4 w-4 mr-2" /> 
             Add Keys
         </Button>
