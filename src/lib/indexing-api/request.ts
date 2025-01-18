@@ -4,6 +4,7 @@ import { AccesssTokenHelper } from './access-token-helper';
 import { DAILY_QUOTA, INDEXING_API_URL } from './constants';
 import { getFirstError, isGoogleApiError } from './google-api-error';
 import { getCredsWithUnusedQuota } from './get-creds-with-unused-quota';
+import { DailyLimitExceededError, GoogleApiError, NetworkError, NoCredsWithUnusedQuotaError } from './errors';
 
 const client = axios.create({
     baseURL: INDEXING_API_URL
@@ -18,7 +19,7 @@ export const request = async<T>(config: AxiosRequestConfig) : Promise<AxiosRespo
     // find credentials with unused quota
     const cred = await getCredsWithUnusedQuota();
     if (cred === null) {
-        throw new Error('no service account credential with unused quota');
+        return Promise.reject(new NoCredsWithUnusedQuotaError('no service account credentials with unused quote'));
     }
 
     // attach access token
@@ -45,7 +46,7 @@ export const request = async<T>(config: AxiosRequestConfig) : Promise<AxiosRespo
 
         const isResponseError = e.response;
         if (!isResponseError) {
-            return Promise.reject(e);
+            return Promise.reject(new NetworkError());
         }
 
         const response = e.response?.data || {};
@@ -70,8 +71,10 @@ export const request = async<T>(config: AxiosRequestConfig) : Promise<AxiosRespo
             if (availableCreds !== null) {
                 return request(config);
             }
+
+            throw new DailyLimitExceededError();
         }
 
-        return Promise.reject(new Error(`Google Api Error: ${error.message}`));
+        throw new GoogleApiError(`Google Api Error: ${error.message}`);
     }
 }

@@ -1,6 +1,7 @@
 import { ServiceAccountCredsStorage } from "@src/lib/service-account";
 import { MessageHandler, StatusResponse } from "../type";
 import { validateServiceAccountJson } from "@src/lib/service-account/validate-json";
+import { startWorker } from "@src/lib/bulk-indexing/worker";
 
 export type AddKeyRequest = {
     type: 'addKey',
@@ -22,6 +23,10 @@ export const addKey : MessageHandler<AddKeyRequest, StatusResponse> = async (
     try {
         await store.insert(json as any);
         sendResponse({ success: true })
+
+        // start background worker
+        startWorker();
+
         return
     } catch(e) {
         console.log(e);

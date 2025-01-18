@@ -65,7 +65,7 @@ export default defineConfig({
       input: {
         setup: './src/pages/setup/index.html',
         settings: './src/pages/settings/index.html',
-        bulkIndex: './src/pages/bulk/index.html'
+        bulkIndex: './src/pages/bulk/index.html',
       },
     },
     sourcemap: isDev,

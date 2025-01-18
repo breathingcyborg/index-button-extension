@@ -1,4 +1,5 @@
 import { handlers } from "@src/background-message-handlers";
+import '../../lib/bulk-indexing/initialize-worker';
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     (async() => {
