@@ -1,4 +1,4 @@
-import type { CreateTabRequest, IndexPageRequest, StatusResponse } from "@src/background-message-handlers";
+import type { CreateTabRequest, IndexUrlRequest, StatusResponse } from "@src/background-message-handlers";
 import { useEffect, useState } from "react";
 import { Button } from "@src/components/ui/button";
 import { CheckCircle2, CloudUploadIcon, FilesIcon, Layers3Icon, LoaderIcon, SettingsIcon } from "lucide-react";
@@ -57,11 +57,11 @@ export function IndexingButtons() {
         // submit for indexing
         setSubmitting(true);
         const response : StatusResponse = await chrome.runtime.sendMessage({
-            type: 'indexPage',
+            type: 'indexUrl',
             payload: { 
                 url: url!
             }
-        } satisfies IndexPageRequest);
+        } satisfies IndexUrlRequest);
         setSubmitting(false);
 
         // show error

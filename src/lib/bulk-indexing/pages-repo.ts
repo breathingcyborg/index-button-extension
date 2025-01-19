@@ -101,4 +101,22 @@ export const countPages = async ({
   return collection.count();
 }
 
+export async function deletePage(id: number) {
+  return db.pages.delete(id);
+}
+
+export async function totalPagesCount() {
+  return db.pages.count();
+}
+
+export async function deleteAllPages() {
+  await db.pages.clear();
+}
+
+
+export async function findPageById(id: number) {
+  const page = await db.pages.get(id);
+  return page;
+}
+
 export { db }

@@ -5,7 +5,11 @@ import { Input } from "@src/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@src/components/ui/select";
 import { Button } from "@src/components/ui/button";
 import { Alert, AlertDescription } from "@src/components/ui/alert";
-import { AlertCircle, CheckCircle2Icon, CircleXIcon, LoaderIcon } from "lucide-react";
+import { AlertCircle, CheckCircle2Icon, CircleXIcon, LoaderIcon, Trash2Icon } from "lucide-react";
+import { DeletePageRequest, StatusResponse } from "@src/background-message-handlers";
+import { toast } from "sonner";
+import { DeletePageButton } from "./delete-page-button";
+import { RetryButton } from "./retry-button";
 
 const statusOptions: { value: PageStatus, label: string }[] = [
     { value: 'pending', label: 'Pending' },
@@ -113,7 +117,7 @@ function StatusFilter({
 function PageListItem({ page }: { page: Page }) {
     const { status, url, error_message } = page;
 
-    return <li className="text-lg flex max-w-full gap-4 px-3">
+    return <li className="group text-lg flex max-w-full gap-4 px-3">
         <div className="flex-grow flex-shrink min-w-0">
             <div className="overflow-auto py-5 invisible-scrollbar pr-5 max-w-full">
                 <div>
@@ -129,20 +133,23 @@ function PageListItem({ page }: { page: Page }) {
                 }
             </div>
         </div>
-        <div className="py-5 flex-grow-0 flex-shrink-0 flex items-center">
+        <div className="py-5 flex-grow-0 flex-shrink-0 flex items-center gap-2">
+            <DeletePageButton page={page} />
+            <RetryButton page={page} />
             {(status === 'pending') && (
-                <span className="w-8 h-8">
+                <span className="w-10 h-10">
                 </span>
             )}
             {(status === 'processing') && (
-                <LoaderIcon className="w-8 h-8 text-blue-600  animate-spin" />
+                <LoaderIcon className="w-10 h-10 text-blue-600  animate-spin" />
             )}
             {(status === 'submitted') && (
-                <CheckCircle2Icon className="w-8 h-8 text-green-500" />
+                <CheckCircle2Icon className="w-10 h-10 text-green-500" />
             )}
             {(status === 'error') && (
-                <CircleXIcon className="w-8 h-8 text-red-500" />
+                <CircleXIcon className="w-10 h-10 text-red-500" />
             )}
         </div>
     </li>
 }
+

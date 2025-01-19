@@ -1,13 +1,13 @@
 import { getButtonSettings } from './button-settings/get-button-settings';
 import { setButtonSettings } from './button-settings/set-button-settings';
 import { createTab } from './general';
-import { indexPage, bulkIndexPages, startWorker } from './indexing';
+import { indexUrl, bulkIndexPages, startWorker, deleteAllPages, indexPage, deletePage } from './indexing';
 import { addKey, getKeys, removeKey } from './keys';
 import { MessageHandler } from './type';
 
 export const handlers : Record<string, MessageHandler> = {
     createTab,
-    indexPage,
+    indexUrl,
     getKeys,
     removeKey,
     addKey,
@@ -15,4 +15,7 @@ export const handlers : Record<string, MessageHandler> = {
     setButtonSettings,
     bulkIndexPages,
     startWorker,
+    deleteAllPages,
+    deletePage,
+    indexPage,
 }

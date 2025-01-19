@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AddPagesModal } from "../../components/bulk-indexing/add-pages-modal";
 import { PagesList } from "../../components/bulk-indexing/pages-list";
 import { BulkAddIntro } from "@src/components/bulk-indexing/bulk-add-intro";
+import { DeleteAllPagesButton } from "@src/components/bulk-indexing/delete-all-pages-button";
 
 export function BulkPage() {
     const [addDialogOpen, setAddDialogOpen] = useState(false);
@@ -21,7 +22,8 @@ export function BulkPage() {
                     Bulk Index
                 </div>
             </div>
-            <div>
+            <div className="flex gap-2">
+                <DeleteAllPagesButton />
                 <Button onClick={() => setAddDialogOpen(true)} >Add Pages</Button>
             </div>
         </ScreenTitle>
