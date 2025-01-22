@@ -4,6 +4,7 @@ import '@assets/styles/tailwind.css';
 import { KeysContextProvider } from '@src/components/keys/keys-context';
 import { BulkPage } from './bulk-page';
 import { Toaster } from '@src/components/ui/sonner';
+import { WorkerStarter } from '@src/components/bulk-indexing/worker-starter';
 
 
 function init() {
@@ -12,6 +13,7 @@ function init() {
   const root = createRoot(rootContainer);
   root.render(
     <KeysContextProvider>
+      <WorkerStarter />
       <Toaster />
       <BulkPage />
     </KeysContextProvider>
