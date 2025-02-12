@@ -134,7 +134,7 @@ export function SitemapUrlsSelector({ onDone } : { onDone: () => void | Promise<
                 />
             </div>
         </div>
-        <div className="max-h-[500px] overflow-y-auto">
+        <div className="max-h-[500px] overflow-y-auto custom-scrollbar">
             {/* select checkbox (toggles selection state for urls in this page) */} {/* search box */}
             <ul className="divide-y-[0.5px] divide-white/30">
                 {
