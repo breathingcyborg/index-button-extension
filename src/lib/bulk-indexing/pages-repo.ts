@@ -1,5 +1,4 @@
-import Dexie, { Collection, Table } from 'dexie';
-import { resolve } from 'path';
+import { db } from '../db';
 
 export type PageStatus = 'pending' | 'submitted' | 'error' | 'processing';
 
@@ -11,19 +10,6 @@ export interface Page {
   last_submitted_at?: number;
   error_message?: string;
 }
-
-class PageDatabase extends Dexie {
-  pages!: Table<Page, number>;
-
-  constructor() {
-    super('PageDatabase');
-    this.version(1).stores({
-      pages: '++id, url, status, created_at, last_submitted_at, error_message'
-    });
-  }
-}
-
-const db = new PageDatabase();
 
 export const addPages = async (urls: string[]): Promise<void> => {
    await db.pages.bulkAdd(urls.map(url => ({
